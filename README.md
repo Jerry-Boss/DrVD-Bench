@@ -1,4 +1,4 @@
-<h1 align="center">DrVD-Bench</h1>
+<h1 align="center">DrVD-Bench: Do Vision-Language Models Reason Like Human Doctors in Medical Image Diagnosis?</h1>
 
 <p align="center">
   <a href="#">paper</a> ｜ <a href="https://www.kaggle.com/datasets/tianhongzhou/drvd-bench/data">kaggle</a> ｜ <a href="https://huggingface.co/datasets/jerry1565/DrVD-Bench">huggingface</a> ｜ <a href="https://github.com/1565220678/DrVD-Bench">github</a>
