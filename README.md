@@ -32,9 +32,9 @@ For more details, please refer to the official documentation: [DeepSeek API Docs
 1. Download the dataset from [Kaggle](https://www.kaggle.com/datasets/tianhongzhou/drvd-bench/data) or [Hugging Face](https://huggingface.co/datasets/jerry1565/DrVD-Bench).  
 2. Run inference with your model and append the results to the `model_response` field in the corresponding files.  
 3. **`model_response` format requirements**  
-   - **visual_evidence_qa_sampled.jsonl / independent_qa.jsonl**: Single letter `A` / `B` / `C` …  
+   - **visual_evidence_qa.jsonl / independent_qa.jsonl**: Single letter `A` / `B` / `C` …  
    - **joint_qa.jsonl**: List containing only letters, separated by commas, e.g., `['B','D','A']`  
-   - **report_generation_sampled.jsonl**: Full string  
+   - **report_generation.jsonl**: Full string  
 
 #### Inference Example Using Qwen-2.5-VL-72B API
 The Qwen-2.5-VL-72B API can be obtained on the Alibaba Cloud Bailian platform ([link](https://bailian.console.aliyun.com/?tab=model#/model-market)).
@@ -70,7 +70,7 @@ python map.py \
 
 ### Compute Metrics
 
-#### task - visual_evidence_qa_sampled.jsonl / independent_qa.jsonl
+#### task - visual_evidence_qa.jsonl / independent_qa.jsonl
 ~~~bash
 python compute_choice_metric.py \
   --json_path="/path/to/results.jsonl" \
@@ -84,7 +84,7 @@ python compute_choice_metric.py \
   --type='joint'
 ~~~
 
-#### task - report_generation_sampled.jsonl
+#### task - report_generation.jsonl
 ~~~bash
 python report_generation_metric.py \
   --API_KEY='your_deepseek_api_key' \
