@@ -12,13 +12,13 @@ def calculate_single_metrics(jsonl_file):
     with open(jsonl_file, 'r', encoding='utf-8') as f:
         for line in f:
             data = json.loads(line)
-            # skip caption tasks
-            if data.get('task') == 'caption':
-                continue
             modality = data.get('modality')
-            task = data.get('task')
+            if 'task' in data:
+                task = data.get('task')
+            else:
+                task = data.get('level')
             answer = data.get('answer', '')
-            model_result = data.get('huatuo_vision_result')
+            model_result = data.get('model_response')
             # extract option letter
             correct_option = answer.split('.')[0].strip()
             stats[modality][task]['total'] += 1
@@ -31,38 +31,52 @@ def calculate_single_metrics(jsonl_file):
             total = counts['total']
             correct = counts['correct']
             acc = correct / total if total else 0
-            print(f"  Task: {task}\n    Accuracy: {acc:.2%} ({correct}/{total})")
+            print(f"  {task}: {acc:.2%} ({correct}/{total})")
         print()
 
 
 def compute_joint_metrics(jsonl_file):
     """
-    Compute multi-level accuracy for joint-inference results.
-    Expects fields: 'response_status', 'modal_response', and '<level>_answer' for each level.
-    Levels: modality, body_region, organ, lesion, diagnosis
+    Compute hierarchical accuracy for joint‐inference results,
+    grouping by modality and then reporting accuracy at each level.
+    Expects each record to have:
+      - model_response: string like "A,B,C,D"
+      - '<level>_answer' fields for each level, e.g. modality_answer="C. CT"
+      - a 'modality' field for grouping
     """
-    levels = ['modality', 'body_region', 'organ', 'lesion', 'diagnosis']
-    total_cnt = defaultdict(int)
-    correct_cnt = defaultdict(int)
+    levels = ['modality', 'organ', 'lesion', 'diagnosis']
+    # metrics[modality][level] = {'total': int, 'correct': int}
+    metrics = defaultdict(lambda: defaultdict(lambda: {'total': 0, 'correct': 0}))
+
+    # Tally totals and corrects per modality and level
     with open(jsonl_file, 'r', encoding='utf-8') as f:
         for line in f:
             data = json.loads(line)
-            if data.get('response_status') != 'OK':
-                continue
-            modal_resp = data.get('modal_response', {})
-            for key in levels:
-                if key in modal_resp:
-                    total_cnt[key] += 1
-                    if modal_resp[key] == data.get(f"{key}_answer"):
-                        correct_cnt[key] += 1
-    # print report
-    print("\n✅ Accuracy Report:")
-    for key in levels:
-        tot = total_cnt.get(key, 0)
-        if tot:
-            corr = correct_cnt.get(key, 0)
-            acc = corr / tot
-            print(f"{key:>12}: {acc:.2%} ({corr}/{tot})")
+            mod = data.get('modality', 'Unknown')
+            # split the string "C,A,C,D" into list ['C','A','C','D']
+            resp_tokens = data.get('model_response', '')
+            if isinstance(resp_tokens, str):
+                resp_list = resp_tokens.split(',')
+            else:
+                resp_list = []
+
+            for idx, level in enumerate(levels):
+                metrics[mod][level]['total'] += 1
+                # correct answer is like "C. CT" → take first char
+                ans_field = data.get(f"{level}_answer", "")
+                correct_letter = ans_field[0] if isinstance(ans_field, str) and ans_field else ""
+                if idx < len(resp_list) and resp_list[idx] == correct_letter:
+                    metrics[mod][level]['correct'] += 1
+
+    # Print the report
+    print("\n✅ Hierarchical Accuracy Report by Modality:")
+    for mod, level_stats in metrics.items():
+        print(f"\nModality: {mod}")
+        for level in levels:
+            tot = level_stats[level]['total']
+            corr = level_stats[level]['correct']
+            acc = corr / tot if tot else 0.0
+            print(f"  {level:>12}: {acc:.2%} ({corr}/{tot})")
 
 
 def main():

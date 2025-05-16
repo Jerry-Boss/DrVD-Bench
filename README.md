@@ -45,6 +45,7 @@ python qwen2.5vl_example.py \
   --API_KEY="your_qwen_api_key" \
   --INPUT_PATH="/path/to/joint_qa.jsonl" \
   --OUTPUT_PATH="/path/to/result.jsonl" \
+  --IMAGE_ROOT='path/to/benchmark/data/root' \
   --type="joint"
 ~~~
 
@@ -54,6 +55,7 @@ python qwen2.5vl_example.py \
   --API_KEY="your_qwen_api_key" \
   --INPUT_PATH="/path/to/qa.jsonl" \
   --OUTPUT_PATH="/path/to/result.jsonl" \
+  --IMAGE_ROOT='path/to/benchmark/data/root' \
   --type="single"
 ~~~
 

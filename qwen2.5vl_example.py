@@ -136,7 +136,7 @@ def main():
                         reply = api_infer(prompt, SYSTEM_PROMPT_DISCRETE, img_path, client,
                                           max_dim=512, quality=75,
                                           max_tokens=50, temperature=0)
-                        rec['modal_response']      = reply
+                        rec['model_response']      = reply
                     except Exception as e:
                         rec['error'] = str(e)
                 fout.write(json.dumps(rec, ensure_ascii=False)+'\n')
@@ -156,7 +156,7 @@ def main():
                 reply = api_infer(rec['joint_prompt'], SYSTEM_PROMPT_JOINT, img_path, client, max_tokens=100, temperature=0)
                 rec['model_response'] = reply
             except Exception as e:
-                rec['modal_response']={k:'Error' for k in ['modality','body_region','organ','lesion','diagnosis']}
+                rec['model_response']={k:'Error' for k in ['modality','body_region','organ','lesion','diagnosis']}
                 rec['response_status']=f"Error: {e}"
             finally:
                 results.append(rec)
