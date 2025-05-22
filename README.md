@@ -8,9 +8,9 @@ This repository is the official implementation of the paper: **DrVD-Bench: Do Vi
 
 ## Introduction
 Vision–language models (VLMs) exhibit strong zero-shot generalization on natural images and show early promise in interpretable medical image analysis. However, existing benchmarks do not systematically evaluate whether these models truly reason like human clinicians or merely imitate superficial patterns.  
-To address this gap, we propose **\bench**, the first multimodal benchmark for clinical visual reasoning. **\bench** consists of three modules: *Visual Evidence Comprehension*, *Reasoning Trajectory Assessment*, and *Report Generation Evaluation*, comprising **7 789** image–question pairs.  
-Our benchmark covers **20 task types**, **17 diagnostic categories**, and **five imaging modalities**—CT, MRI, ultrasound, X-ray, and pathology. **\bench** mirrors the clinical workflow from modality recognition to lesion identification and diagnosis.  
-We benchmark **19 VLMs** (general-purpose & medical-specific, open-source & proprietary) and observe that performance drops sharply as reasoning complexity increases. While some models begin to exhibit traces of human-like reasoning, they often rely on shortcut correlations rather than grounded visual understanding. **\bench** therefore provides a rigorous framework for developing clinically trustworthy VLMs.
+To address this gap, we propose DrVD-Bench, the first multimodal benchmark for clinical visual reasoning. DrVD-Bench consists of three modules: *Visual Evidence Comprehension*, *Reasoning Trajectory Assessment*, and *Report Generation Evaluation*, comprising **7 789** image–question pairs.  
+Our benchmark covers **20 task types**, **17 diagnostic categories**, and **five imaging modalities**—CT, MRI, ultrasound, X-ray, and pathology. DrVD-Bench mirrors the clinical workflow from modality recognition to lesion identification and diagnosis.  
+We benchmark **19 VLMs** (general-purpose & medical-specific, open-source & proprietary) and observe that performance drops sharply as reasoning complexity increases. While some models begin to exhibit traces of human-like reasoning, they often rely on shortcut correlations rather than grounded visual understanding. DrVD-Bench therefore provides a rigorous framework for developing clinically trustworthy VLMs.
 
 <div align="center">
   <img src="images/cover_image.png" alt="cover image" />
