@@ -3,7 +3,7 @@
 </h1>
 
 <h1 align="center" style="color:#d00;">
-  NeurIPS 2024 D&B Track
+  NeurIPS 2025 D&B Track
 </h1>
 
 <p align="center">
